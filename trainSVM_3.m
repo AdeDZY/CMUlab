@@ -1,17 +1,17 @@
 
 Fs = 44100;
 
-nInhale = 8;
-nExhale = 8;
+nInhale = 6;
+nExhale = 6;
 % read all the audio files
 for i = 1:nInhale
-    fileName = strcat('F:\CMUlab\breath detect\data725\in',num2str(i),'.wav');
+    fileName = strcat('F:\CMUlab\breath detect\data725\in',num2str(i),'.wav')
     w=wavread(fileName);
     wav{i}=w(:,1);
 end
 
 for i = 1:nExhale
-    fileName = strcat('F:\CMUlab\breath detect\data725\inhale',num2str(i),'.wav');
+    fileName = strcat('F:\CMUlab\breath detect\data725\ex',num2str(i),'.wav');
     w=wavread(fileName);
     wav{i+nInhale}=w(:,1);
 end
@@ -39,7 +39,7 @@ for i = 1 : nInhale + nExhale
     s = 1;
     nFrame = 1;
     while s + windowSize - 1 <= length(w)
-        frame = w(s,s + windowsize - 1);
+        frame = w(s:s + windowSize - 1);
         [MFCCs, FBEs, frames] = mfcc( frame, Fs, Tw, Ts, alpha, hamming, R, M, C, L );
         MFCCss{nFrame}=MFCCs;
         s = s + windowSize - overlapSize;
@@ -48,22 +48,22 @@ for i = 1 : nInhale + nExhale
     
     nFrame = nFrame - 1;
     
-    len = size(MFCCs,1)*size(MFCCs,2)
-    mMFCCs = zeros(len);
+    len = size(MFCCs,1)*size(MFCCs,2);
+    mMFCCs = zeros(1,len);
     
     for t = 1:nFrame
-        mMFCCs = mMFCCs + reshape(MFCCss{t},1,len)
+        mMFCCs = mMFCCs + reshape(MFCCss{t},1,len);
     end
     mMFCCs = mMFCCs / nFrame;
-    features{i} = mMFCCs;
+    features(i,1:len) = mMFCCs;
 end
             
 group = zeros(nInhale+nExhale,1);
-for i = n : nFile
+for i = 1 : nInhale
     group(i)=1;
 end
              
-svmStruct = svmtrain(trainning,group);
+svmStruct = svmtrain(features,group);
             
       
 
