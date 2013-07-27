@@ -1,17 +1,17 @@
-
+clear
 Fs = 44100;
 
-nInhale = 6;
-nExhale = 6;
+nInhale = 25;
+nExhale = 25;
 % read all the audio files
 for i = 1:nInhale
-    fileName = strcat('F:\CMUlab\breath detect\data725\in',num2str(i),'.wav')
+    fileName = strcat('F:\CMUlab\breath detect\trainData\inhale',num2str(i),'.wav');
     w=wavread(fileName);
     wav{i}=w(:,1);
 end
 
 for i = 1:nExhale
-    fileName = strcat('F:\CMUlab\breath detect\data725\ex',num2str(i),'.wav');
+    fileName = strcat('F:\CMUlab\breath detect\trainData\exhale',num2str(i),'.wav');
     w=wavread(fileName);
     wav{i+nInhale}=w(:,1);
 end
@@ -19,8 +19,8 @@ end
 %getting feature
 
 %------------parameters for MFCC-----------------------
-Tw = 25;           % analysis frame duration (ms)
-Ts = 10;           % analysis frame shift (ms)
+Tw = 200;           % analysis frame duration (ms)
+Ts = 100;           % analysis frame shift (ms)
 alpha = 0.97;      % preemphasis coefficient
 R = [ 1500 4500 ];  % frequency range to consider
 M = 20;            % number of filterbank channels 
@@ -30,8 +30,8 @@ L = 22;            % cepstral sine lifter parameter
 % hamming window (see Eq. (5.2) on p.73 of [1])
 hamming = @(N)(0.54-0.46*cos(2*pi*[0:N-1].'/(N-1)));  
 
-windowSize = 18000;
-overlapSize = 9000;
+windowSize = 30000;
+overlapSize =10000;
 %------------------------------------------------------
 
 for i = 1 : nInhale + nExhale

@@ -1,13 +1,13 @@
 function []=testStreamSVM_3(fileName,svmStruct)
-windowSize = 30000;
-overlapSize = 10000;
+windowSize = 18000;
+overlapSize = 9000;
 
 data = wavread(fileName);
 data = data(:,1);
 
 %-----------------------parameters------------------------------------
-Tw = 200;           % analysis frame duration (ms)
-Ts = 100;           % analysis frame shift (ms)
+Tw = 100;           % analysis frame duration (ms)
+Ts = 30;           % analysis frame shift (ms)
 alpha = 0.97;      % preemphasis coefficient
 R = [ 1500 4500 ];  % frequency range to consider
 M = 20;            % number of filterbank channels 
@@ -42,7 +42,7 @@ i = 1;
 while start + windowSize - 1 <= length(data)
     e = start + windowSize -1;
     subData = data(start:e,1);
-    if(groups(i)==1)
+    if(groups(i)==0)
         plot(start:e,subData,'r');
         hold on;
     end
