@@ -1,6 +1,6 @@
-dInhale = wavread('F:\CMUlab\breath detect\trainData\fiterBreathLeft.wav');
-dPush = wavread('F:\CMUlab\breath detect\trainData\filterPushLeft.wav');
-dOrigin = wavread('F:\CMUlab\breath detect\trainData\stream4.wav');
+dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft.wav');
+dPush = wavread('F:\CMUlab\trainData\filterPushLeft.wav');
+dOrigin = wavread('F:\CMUlab\trainData\stream5.wav');
 
 dInhale = dInhale(:,1);
 dPush = dPush(:,1);
