@@ -1,6 +1,6 @@
-dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft4.wav');
-dPush = wavread('F:\CMUlab\trainData\filterPushLeft4.wav');
-dOrigin = wavread('F:\CMUlab\trainData\stream7.wav');
+dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft3.wav');
+dPush = wavread('F:\CMUlab\trainData\filterPushLeft3.wav');
+dOrigin = wavread('F:\CMUlab\trainData\stream6.wav');
 
 dInhale = dInhale(:,1);
 dPush = dPush(:,1);
@@ -33,8 +33,26 @@ hold on;
 
 ma = max(abs(e));
 threshold = ma/10;
-I = find(e>threshold);
+res = zeros(len,1);
+i = 1;
+n = 0;
+while i <= length(e)
+    if(e(i)>threshold)
+        n = n + 1;
+        if(n == 2)
+            res(i)=1;
+            res(i-1)=1;
+            %res(i-2)=1;
+        elseif(n>2)
+            res(i)=1;
+        end
+    else
+        n = 0;
+    end
+    i= i + 1;
+end
 
+I = find(res==1);
 subplot(5,1,4),plot(I, e(I),'r.');
 I2 = zeros(length(I)*windowSize,1);
 for i = 1:length(I)
