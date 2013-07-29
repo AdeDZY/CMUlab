@@ -11,7 +11,7 @@ dMul = dInhale.*dPush;
 
 
 
-windowSize = 1000;
+windowSize = 2000;
 overlapSize = 1000;
 
 s = 1;
@@ -32,9 +32,9 @@ subplot(5,1,4),plot(e,'b.');
 hold on;
 
 ma = max(abs(e));
-threshold = ma/10;
-I = find(e>threshold);
+mi = min(abs(e));
 
+I = find(e>0.01);
 subplot(5,1,4),plot(I, e(I),'r.');
 I2 = zeros(length(I)*windowSize,1);
 for i = 1:length(I)
