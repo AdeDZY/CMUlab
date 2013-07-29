@@ -1,7 +1,6 @@
 dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft3.wav');
 dPush = wavread('F:\CMUlab\trainData\filterPushLeft3.wav');
 dOrigin = wavread('F:\CMUlab\trainData\stream6.wav');
-Fs = 44100;
 
 dInhale = dInhale(:,1);
 dPush = dPush(:,1);
@@ -80,4 +79,4 @@ edge = (I(i)+4)*windowSize;
 subplot(5,1,5),plot(edge,dOrigin(edge),'g*');
 
 %whether hold breath for 3s
-findBreath(dOrigin(edge:edge+Fs*3))
+findBreath(dOrigin(edge,ed))
