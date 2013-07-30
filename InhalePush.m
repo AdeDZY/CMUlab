@@ -1,13 +1,9 @@
-dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft6.wav');
-dPush = wavread('F:\CMUlab\trainData\filterPushLeft6.wav');
-dOrigin = wavread('F:\CMUlab\trainData\stream9.wav');
+function [success]=InhalePush(dInhale,dPush,dOrigin)
 Fs = 44100;
 
 dInhale = dInhale(:,1);
 dPush = dPush(:,1);
 dOrigin = dOrigin(:,1);
-
-dDiff = dInhale - dPush;
 dMul = dInhale.*dPush;
 
 
@@ -17,6 +13,7 @@ windowSize = 1000;
 s = 1;
 i = 1;
 len = length(dInhale);
+e = zeros(len/windowSize + 1,1);
 while s + windowSize - 1 <= len
     subD = dMul(s:s+windowSize-1,1);
     e(i)= dot(subD,subD);
@@ -53,6 +50,7 @@ while i <= length(e)
 end
 
 I = find(res==1);
+
 subplot(5,1,4),plot(I, e(I),'r.');
 I2 = zeros(length(I)*windowSize,1);
 for i = 1:length(I)
@@ -75,9 +73,19 @@ while i < length(I)
         break;
     end
 end
-edge = (I(i-1)+10)*windowSize
+
+startTime = (I(1)-2)*windowSize;
+edge = (I(i-1)+10)*windowSize;
+subplot(5,1,5),plot(startTime,dOrigin(startTime),'g*');
+hold on;
 subplot(5,1,5),plot(edge,dOrigin(edge),'g*');
 
+if(isempty(I))
+    success = 0;
+    return;
+end
+
 %whether hold breath for 3s
-edgeEnd = min(len,edge+Fs*3);
-silenceExhale(dInhale(edge:edgeEnd))
+edgeEnd = min(len,edge+Fs*9);
+success = silenceBreath(dInhale(edge:edgeEnd));
+end

@@ -1,5 +1,5 @@
-function [noBreath,sTime,eTime]=silenceBreath(data)
-    windowSize = 1200;
+function [noExhale]=silenceBreath(data)
+    windowSize = 1000;
    s = 1;
    len = length(data);
    i = 1;
@@ -11,11 +11,8 @@ function [noBreath,sTime,eTime]=silenceBreath(data)
    end
    res = zeros(length(e),1);
    n = 0;
-   %Q1 = prctile(e,25);
-   Q3 = prctile(2,75);
-   threshold = max(0.005,1.3*mean(e(e<Q3)));
    for i = 1:length(e)
-       if(e(i)>threshold)
+       if(e(i)>0.01)
            n = n + 1;
            if(n==3)
                res(i)=1;
@@ -29,30 +26,9 @@ function [noBreath,sTime,eTime]=silenceBreath(data)
        end
    end
    I = find(res == 1);
-   
    figure
    subplot(2,1,1),plot(data,'b');
-   hold on;
    subplot(2,1,2),plot(e,'g');
    hold on;
    subplot(2,1,2),plot(I,e(I),'r.')
-   if(isempty(I))
-       noBreath = 1;
-       sTime = -1;
-       eTime = -1;
-   else
-       noBreath = 0;
-       sTime = (I(1)-1)*windowSize;
-       for i = 1:length(I)-1
-           if(I(i)==I(i+1)-1)
-               continue;
-           else
-               break;
-           end
-       end
-       eTime = I(i)*windowSize;   
-       subplot(2,1,1),plot(sTime,data(sTime),'g*');
-       hold on;
-       subplot(2,1,1),plot(eTime,data(eTime),'g*');
-   end
 end
