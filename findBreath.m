@@ -16,7 +16,6 @@ while s + lenS<=lenD
     s = s + step;
 end
 res = res(1:i-1);
-d = d(1:e);
 data = data(1:e);
 figure
 subplot(2,1,1),plot(d,'b');
@@ -24,8 +23,10 @@ hold on;
 subplot(2,1,2),plot(res,'g');
 hold on;
 
-Q3 = prctile(res,75);
-I = find(res>Q3);
+%get Threshold
+threshold = 10;
+
+I = find(res > threshold);
 subplot(2,1,2),plot(I,res(I),'r.');
 
 

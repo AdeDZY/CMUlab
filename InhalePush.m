@@ -1,6 +1,6 @@
-dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft3.wav');
-dPush = wavread('F:\CMUlab\trainData\filterPushLeft3.wav');
-dOrigin = wavread('F:\CMUlab\trainData\stream6.wav');
+dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft5.wav');
+dPush = wavread('F:\CMUlab\trainData\filterPushLeft5.wav');
+dOrigin = wavread('F:\CMUlab\trainData\stream8.wav');
 Fs = 44100;
 
 dInhale = dInhale(:,1);
@@ -13,7 +13,6 @@ dMul = dInhale.*dPush;
 
 
 windowSize = 1000;
-overlapSize = 1000;
 
 s = 1;
 i = 1;
@@ -33,7 +32,7 @@ subplot(5,1,4),plot(e,'b.');
 hold on;
 
 ma = max(abs(e));
-threshold = ma/10;
+threshold = ma/8;
 res = zeros(len,1);
 i = 1;
 n = 0;
@@ -58,7 +57,7 @@ subplot(5,1,4),plot(I, e(I),'r.');
 I2 = zeros(length(I)*windowSize,1);
 for i = 1:length(I)
     for j = 1:windowSize
-        I2((i-1)*windowSize+j)=(I(i)-1)*windowSize+j-1;
+        I2((i-1)*windowSize+j)=(I(i)-1)*windowSize+j;
     end
 end
 subplot(5,1,5),plot(dOrigin);
@@ -76,8 +75,9 @@ while i < length(I)
         break;
     end
 end
-edge = (I(i)+4)*windowSize;
+edge = (I(i)+10)*windowSize;
 subplot(5,1,5),plot(edge,dOrigin(edge),'g*');
 
 %whether hold breath for 3s
-findBreath(dOrigin(edge:edge+Fs*3))
+edgeEnd = min(len,edge+Fs*3);
+silenceExhale(dInhale(edge:edgeEnd))
