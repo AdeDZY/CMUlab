@@ -1,6 +1,6 @@
-dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft5.wav');
-dPush = wavread('F:\CMUlab\trainData\filterPushLeft5.wav');
-dOrigin = wavread('F:\CMUlab\trainData\stream8.wav');
+dInhale = wavread('F:\CMUlab\trainData\filterInhaleLeft6.wav');
+dPush = wavread('F:\CMUlab\trainData\filterPushLeft6.wav');
+dOrigin = wavread('F:\CMUlab\trainData\stream9.wav');
 Fs = 44100;
 
 dInhale = dInhale(:,1);
@@ -32,7 +32,7 @@ subplot(5,1,4),plot(e,'b.');
 hold on;
 
 ma = max(abs(e));
-threshold = ma/8;
+threshold = ma/10;
 res = zeros(len,1);
 i = 1;
 n = 0;
@@ -75,7 +75,7 @@ while i < length(I)
         break;
     end
 end
-edge = (I(i)+10)*windowSize;
+edge = (I(i-1)+10)*windowSize
 subplot(5,1,5),plot(edge,dOrigin(edge),'g*');
 
 %whether hold breath for 3s

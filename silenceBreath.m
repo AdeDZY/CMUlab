@@ -9,7 +9,23 @@ function []=silenceExhale(data)
        i = i + 1;
        s = s + windowSize;
    end
-   I = find(e>0.01);
+   res = zeros(length(e),1);
+   n = 0;
+   for i = 1:length(e)
+       if(e(i)>0.01)
+           n = n + 1;
+           if(n==3)
+               res(i)=1;
+               res(i-1)=1;
+               res(i-2)=1;
+           elseif(n>3)
+               res(i)=1;
+           end
+       else
+           n = 0;
+       end
+   end
+   I = find(res == 1);
    figure
    subplot(2,1,1),plot(data,'b');
    subplot(2,1,2),plot(e,'g');
