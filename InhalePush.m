@@ -19,10 +19,10 @@ while s + windowSize - 1 <= len
 end
 
 figure;
-subplot(5,1,1),plot(dInhale,'r');
-subplot(5,1,2),plot(dPush,'b');
-subplot(5,1,3),plot(dMul,'g');
-subplot(5,1,4),plot(e,'b.');
+subplot(5,1,1),plot(dInhale,'r'),title('Breath(300Hz-600Hz)');
+subplot(5,1,2),plot(dPush,'b'),title('Inhaler(1500Hz-1700Hz)');
+subplot(5,1,3),plot(dMul,'g'),title('Breath * Inhaler');
+subplot(5,1,4),plot(e,'b.'),title('Short-time Energy');
 hold on;
 
 ma = max(abs(e));
@@ -33,11 +33,11 @@ n = 0;
 while i <= length(e)
     if(e(i)>threshold)
         n = n + 1;
-        if(n == 2)
-            res(i)=1;
-            res(i-1)=1;
-            %res(i-2)=1;
-        elseif(n>2)
+        if(n == 3)
+            for t = 0:n-1
+            res(i-t)=1;
+            end
+        elseif(n>3)
             res(i)=1;
         end
     else
@@ -55,7 +55,7 @@ for i = 1:length(I)
         I2((i-1)*windowSize+j)=(I(i)-1)*windowSize+j;
     end
 end
-subplot(5,1,5),plot(dOrigin);
+subplot(5,1,5),plot(dOrigin),title('Overlapping Period');
 hold on;
 subplot(5,1,5),plot(I2,dOrigin(I2),'r.');
 hold on;

@@ -31,9 +31,9 @@ function [noBreath,sTime,eTime]=silenceBreath(data)
    I = find(res == 1);
    
    figure
-   subplot(2,1,1),plot(data,'b');
+   subplot(2,1,1),plot(data,'b'),title('Data');
    hold on;
-   subplot(2,1,2),plot(e,'g');
+   subplot(2,1,2),plot(e,'g'),title('Short-time Energy');
    hold on;
    subplot(2,1,2),plot(I,e(I),'r.')
    if(isempty(I))
@@ -42,7 +42,7 @@ function [noBreath,sTime,eTime]=silenceBreath(data)
        eTime = -1;
    else
        noBreath = 0;
-       sTime = (I(1)-1)*windowSize;
+       sTime = (I(1)-1)*windowSize+1;
        for i = 1:length(I)-1
            if(I(i)==I(i+1)-1)
                continue;
