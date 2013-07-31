@@ -1,9 +1,6 @@
 function [success]=InhalePush(dInhale,dPush,dOrigin)
 Fs = 44100;
 
-dInhale = dInhale(:,1);
-dPush = dPush(:,1);
-dOrigin = dOrigin(:,1);
 dMul = dInhale.*dPush;
 
 

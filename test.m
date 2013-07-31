@@ -13,8 +13,11 @@ function []=test(caseNo)
     
     dStep1 = wavread(f4);
     dStep1 = dStep1(:,1);
+    
+    	
     dStep4 = wavread(f5);
     dStep4 = dStep4(:,1);
+   
     step1HasBreath = 1 - silenceBreath(dStep1)
     step2and3Success = InhalePush(dInhale,dPush,dOrigin)
     step4HasBreath = 1 - silenceBreath(dStep4)
