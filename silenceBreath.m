@@ -1,5 +1,5 @@
 function [noBreath,sTime,eTime]=silenceBreath(data)
-    windowSize = 1200;
+    windowSize = 1000;
    s = 1;
    len = length(data);
    i = 1;
@@ -17,11 +17,11 @@ function [noBreath,sTime,eTime]=silenceBreath(data)
    for i = 1:length(e)
        if(e(i)>threshold)
            n = n + 1;
-           if(n==3)
-               res(i)=1;
-               res(i-1)=1;
-               res(i-2)=1;
-           elseif(n>3)
+           if(n==8)
+             for t = 0:n-1
+                res(i-t)=1;
+             end
+           elseif(n>8)
                res(i)=1;
            end
        else
@@ -50,9 +50,9 @@ function [noBreath,sTime,eTime]=silenceBreath(data)
                break;
            end
        end
-       eTime = I(i)*windowSize;   
-       subplot(2,1,1),plot(sTime,data(sTime),'g*');
+       eTime = I(i)*windowSize;
+       subplot(2,1,1),plot(sTime,data(sTime),'r*'),text(sTime,data(sTime),num2str(sTime/44100.0),'VerticalAlignment','top');
        hold on;
-       subplot(2,1,1),plot(eTime,data(eTime),'g*');
+       subplot(2,1,1),plot(eTime,data(eTime),'r*'),text(eTime,data(eTime),num2str(eTime/44100.0),'VerticalAlignment','bottom');
    end
 end

@@ -26,8 +26,8 @@ subplot(5,1,4),plot(e,'b.'),title('Short-time Energy');
 hold on;
 
 ma = max(abs(e));
-threshold = ma/10;
-res = zeros(len,1);
+threshold = max(4*10^-4,ma/10);
+res = zeros(length(e),1);
 i = 1;
 n = 0;
 while i <= length(e)
@@ -73,9 +73,24 @@ end
 
 startTime = (I(1)-2)*windowSize;
 edge = (I(i-1)+10)*windowSize;
-subplot(5,1,5),plot(startTime,dOrigin(startTime),'g*');
+
+%sOverlap = startTime/44100.0
+%eOverlap = edge/44100.0
+
+
+subplot(5,1,5),plot(startTime,dOrigin(startTime),'r*'),text(startTime,dOrigin(startTime),num2str(startTime/44100.0),'VerticalAlignment','top');
 hold on;
-subplot(5,1,5),plot(edge,dOrigin(edge),'g*');
+subplot(5,1,5),plot(edge,dOrigin(edge),'r*'),text(edge,dOrigin (edge),num2str(edge/44100.0),'VerticalAlignment','bottom');
+
+% figure
+% plot(dOrigin),title('Overlapping Period');
+% hold on;
+% plot(I2,dOrigin(I2),'r.');
+% hold on;
+% plot(startTime,dOrigin(startTime),'r*'),text(startTime,dOrigin(startTime),num2str(startTime/44100.0),'VerticalAlignment','top');
+% hold on;
+% plot(edge,dOrigin(edge),'r*'),text(edge,dOrigin(edge),num2str(edge/44100.0),'VerticalAlignment','bottom');
+
 
 if(isempty(I))
     success = 0;
@@ -84,5 +99,9 @@ end
 
 %whether hold breath for 3s
 edgeEnd = min(len,edge+Fs*9);
-success = silenceBreath(dInhale(edge:edgeEnd));
+[success,s,e] = silenceBreath(dInhale(edge:edgeEnd));
+%if(success == 0)
+%    sBreath = (edge+s)/44100.0
+%    eBreath = (sBreath + s)/44100.0
+%end
 end
