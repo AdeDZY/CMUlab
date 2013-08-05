@@ -26,7 +26,7 @@ subplot(5,1,4),plot(e,'b.'),title('Short-time Energy');
 hold on;
 
 ma = max(abs(e));
-threshold = max(4*10^-4,ma/10);
+threshold = max(4*10^-7,ma/10);
 res = zeros(length(e),1);
 i = 1;
 n = 0;

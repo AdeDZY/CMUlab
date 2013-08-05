@@ -12,6 +12,7 @@ data = data(:,1);
 s = 1;
 len = length(data);
 i = 1;
+res = zeros(len/windowSize,1);
 while s + windowSize - 1 < len
     subdata = data(s:s+windowSize - 1);
     d = MFCCDistance(subdata,M_bar,M_V);
@@ -20,11 +21,11 @@ while s + windowSize - 1 < len
     s = s + windowSize;
 end
 figure
-subplot(2,1,1),plot(data);
+subplot(2,1,1),plot(data),title('Input Signal');
 hold on;
-subplot(2,1,2),plot(res,'b');
+subplot(2,1,2),plot(res,'b'),title('Distance');
 hold on;
-subplot(2,1,2),plot(1:length(res),threshold,'r');
+subplot(2,1,2),plot(1:length(res),threshold,'r'),text(length(res)/5*4,threshold,strcat('threshold = ',num2str(threshold)),'VerticalAlignment','top');
 hold on;
 
 I = find(res<=threshold);
