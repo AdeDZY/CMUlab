@@ -2,12 +2,12 @@ clear
 M_bar = dlmread('F:\CMUlab\breath detect\M_bar.dat');
 M_V = dlmread('F:\CMUlab\breath detect\M_V.dat');
 
-threshold = 350;
+threshold = 340;
 ml = 31519;
 windowSize = ml;
 
-data = wavread('F:\CMUlab\trainData\730\7301.wav');
-data = data(:,1);
+data = wavread('F:\CMUlab\trainData\730\7305.wav');
+data = data(5.6*10^5:*10^5,1);
 
 s = 1;
 len = length(data);
