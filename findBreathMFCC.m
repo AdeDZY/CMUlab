@@ -6,7 +6,7 @@ threshold = 320;
 ml = 31519;
 windowSize = ml;
 
-data = wavread('F:\CMUlab\trainData\730\730long.wav');
+data = wavread('F:\CMUlab\trainData\730\7304.wav');
 data = StandardAmplitude(data(:,1));
 
 s = 1;
