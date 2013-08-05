@@ -2,7 +2,7 @@ function []=trainFindBreathMFCC()
 
 %-------------------read trainning set----------------
 ml = 31519;
-N = 10;
+N = 18;
 for i = 1:N
     file = strcat('F:\CMUlab\trainData\exhale\',num2str(i),'.wav');
     data{i}=wavread(file);
